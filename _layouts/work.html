@@ -4,6 +4,18 @@ layout: default
 
 <article class="work">
   <h1 class="post-title">{{ page.title }}</h1>
+  {%- for row in page.rows -%}
+    <div class="row-wrapper">
+      <div class="row-inner">
+        <div class="row">
+          {%- for column in row -%}
+            <div class="column column-{{ column.span | default: 'default' | replace: '/', '-' }}">
+              {{ column.content | markdownify }}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  {%- endfor -%}
   {{ content }}
-  {{ page }}
 </article>

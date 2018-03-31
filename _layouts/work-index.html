@@ -1,0 +1,16 @@
+---
+layout: default
+---
+
+{%- assign sorted_pages = site.pages | sort:'name' -%}
+
+<ul>
+{%- for page in sorted_pages -%}
+  {%- assign url_split = page.url | split:'/' -%}
+  {%- if url_split[1] == 'work' and url_split[2] -%}
+    <li class="page-heading">
+      <a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a>
+    </li>
+  {%- endif -%}
+{%- endfor -%}
+</ul>

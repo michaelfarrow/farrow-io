@@ -1,0 +1,39 @@
+
+$row-gutter: 1em;
+
+body {
+  padding: 2em;
+}
+
+.row-wrapper {
+  overflow: hidden;
+}
+
+.row-inner {
+  // margin-left: $row-gutter * -0.5;
+  // margin-right: $row-gutter * -0.5;
+}
+
+.row {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.column {
+  display: table-cell;
+  // padding-left: $row-gutter * 0.5;
+  // padding-right: $row-gutter * 0.5;
+
+  &.column-1-2 {
+    width: 50%;
+  }
+
+  &.column-1-3 {
+    width: 33.3333333%;
+  }
+
+  &.column-2-3 {
+    width: 66.6666666%;
+  }
+}
