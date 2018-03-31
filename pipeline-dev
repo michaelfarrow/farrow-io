@@ -4,4 +4,4 @@ step "install dependencies"
 bundle install --binstubs .bin --path .bundle
 
 step "run"
-logger jekyll bundle exec jekyll serve --incremental --baseurl "" --host 0.0.0.0 
+logger jekyll bundle exec jekyll serve --baseurl "" --host 0.0.0.0 
