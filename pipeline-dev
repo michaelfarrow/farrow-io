@@ -1,0 +1,7 @@
+#!/bin/bash
+
+step "install dependencies"
+bundle install --binstubs .bin --path .bundle
+
+step "run"
+logger jekyll bundle exec jekyll serve --host 0.0.0.0

@@ -1,0 +1,9 @@
+version: '3'
+services:
+  main:
+    image: ruby:2.5.0
+    ports:
+      - '80:4000'
+    working_dir: /app/src
+    volumes:
+      - .:/app
