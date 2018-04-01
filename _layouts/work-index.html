@@ -2,15 +2,14 @@
 layout: default
 ---
 
-{%- assign sorted_pages = site.pages | sort:'name' -%}
-
-<ul>
-{%- for page in sorted_pages -%}
-  {%- assign url_split = page.url | split:'/' -%}
-  {%- if url_split[1] == 'work' and url_split[2] -%}
-    <li class="page-heading">
-      <a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a>
-    </li>
-  {%- endif -%}
-{%- endfor -%}
-</ul>
+{% for work_page_name in site.data.work %}
+  {% assign work_page_path = work_page_name | prepend: 'work/' | append: '.md' %}
+  {% assign work_page = site.pages | where: 'path', work_page_path | first %}
+  {% if work_page %}
+    <div>
+      <a href="{{ site.baseurl }}{{ work_page.url }}">
+        {{ work_page.title }}
+      </a>
+    </div>
+  {% endif %}
+{% endfor %}

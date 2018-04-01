@@ -1,4 +1,15 @@
 
 html {
   font-size: 15px;
+  font-family: 'IBM Plex Serif', serif;
+}
+
+nav {
+  ul {
+    li.current {
+      a {
+        color: red;
+      }
+    }
+  }
 }

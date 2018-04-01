@@ -17,6 +17,7 @@
   </title>
 
   <!-- CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Serif:400,600">
   <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/style.css">
 
   <!-- Icons -->
@@ -34,6 +35,30 @@
           <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
         </h3>
         <small>{{ site.tagline }}</small>
+        {% assign page_url_split = page.url | split: '/' %}
+        <nav>
+          <ul>
+            {% for nav_item in site.data.navigation %}
+              {% assign nav_item_path = nav_item | append: '.md' %}
+              {% assign nav_page = site.pages | where: 'path', nav_item_path | first %}
+              {% if nav_page %}
+                {% assign nav_page_url_split = nav_page.url | split: '/' %}
+                {% assign nav_page_current = true %}
+                {% for nav_page_url_split_part in nav_page_url_split %}
+                  {% assign nav_page_url_split_part_index = forloop.index | minus: 1 %}
+                  {% if nav_page_url_split_part != page_url_split[nav_page_url_split_part_index] %}
+                    {% assign nav_page_current = false %}
+                  {% endif %}
+                {% endfor %}
+                <li {% if nav_page_current %}class="current"{% endif %}>
+                  <a href="{{ site.baseurl }}{{ nav_page.url }}">
+                    {{ nav_page.title }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </nav>
       </header>
 
       <hr>
@@ -46,5 +71,8 @@
           &copy; {{ site.time | date: '%Y' }}. All rights reserved.
       </footer>
     </div>
+
+    <script src="{{ site.baseurl }}/assets/javascript/app.js"></script>
+
   </body>
 </html>

@@ -9,8 +9,20 @@ layout: default
       <div class="row-inner">
         <div class="row">
           {%- for column in row -%}
-            <div class="column column-{{ column.span | default: 'default' | replace: '/', '-' }}">
-              {{ column.content | markdownify }}
+            <div class="column
+              column-span-{{ column.span | default: 'default' | replace: '/', '-' }}
+              column-push-{{ column.push | default: '0' | replace: '/', '-' }}
+              column-pull-{{ column.pull | default: '0' | replace: '/', '-' }}
+              column-type-{{ column.type | default: 'default' }}"
+            >
+              {% case column.type %}
+                {% when 'image' %}
+                  {% include image.html src=column.content %}
+                {% when 'embed' %}
+                  {% include embed.html src=column.content %}
+                {% else %}
+                  {{ column.content | markdownify }}
+              {% endcase %}
             </div>
           {%- endfor -%}
         </div>

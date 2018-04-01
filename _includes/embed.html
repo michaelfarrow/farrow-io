@@ -1,0 +1,11 @@
+<div class="embed-wrapper">
+  <div class="embed-inner">
+    {% assign src = include.src %}
+    {% if src contains 'youtube' %}
+      <iframe width="1920" height="1080" src="{{ src | replace: 'watch?v=', 'embed/' }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    {% else if src contains 'vimeo' %}
+      <iframe width="1920" height="1080" src="{{ src | replace: 'vimeo.com', 'player.vimeo.com/video' | append: '?title=0&byline=0&portrait=0' }}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    {% else if src contains 'twitter' %}
+    {% endif %}
+  </div>
+</div>

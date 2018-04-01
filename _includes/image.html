@@ -1,0 +1,8 @@
+<div class="image-wrapper">
+  {% if include.page %}
+    {% assign image_page = include.page %}
+  {% else %}
+    {% assign image_page = page %}
+  {% endif %}
+  <div class="image" style="background-image:url({{ site.baseurl }}/assets/img{{ image_page.url }}{{ include.src }})"></div>
+</div>
