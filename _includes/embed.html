@@ -1,11 +1,37 @@
+{%- assign embed_ratio_str = include.ratio | default: '1920:1080' | split: ':' -%}
+{%- assign embed_ratio_x = embed_ratio_str[0] | times: 1.0 -%}
+{%- assign embed_ratio_y = embed_ratio_str[1] | times: 1.0 -%}
+{%- assign embed_ratio = embed_ratio_y | divided_by: embed_ratio_x | times: 100.0 -%}
 <div class="embed-wrapper">
-  <div class="embed-inner">
-    {% assign src = include.src %}
-    {% if src contains 'youtube' %}
-      <iframe width="1920" height="1080" src="{{ src | replace: 'watch?v=', 'embed/' }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-    {% else if src contains 'vimeo' %}
-      <iframe width="1920" height="1080" src="{{ src | replace: 'vimeo.com', 'player.vimeo.com/video' | append: '?title=0&byline=0&portrait=0' }}" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-    {% else if src contains 'twitter' %}
-    {% endif %}
+  <div class="embed-inner embed-stopped" style="padding-top: {{ embed_ratio }}%">
+    {%- assign src = include.src -%}
+    {%- capture embed_video_controls -%}
+      <a class="embed-controls-play-pause" href="#"><span>Play/Pause</span><i></i></a>
+    {%- endcapture -%}
+    {%- capture embed_video_image -%}
+      {%- if include.image -%}
+        <span class="embed-image">
+          {%- include image.html src=include.image span=column.span external=include.image_external -%}
+        </span>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if include.background == true -%}
+      {%- assign youtube_background = '&loop=1&autoplay=1&mute=1' -%}
+      {%- assign vimeo_background = '1' -%}
+      {%- assign embed_video_controls = '' -%}
+    {%- else -%}
+      {%- assign youtube_background = '' -%}
+      {%- assign vimeo_background = '0' -%}
+    {%- endif -%}
+    {%- if src contains 'youtube' -%}
+      <iframe class="embed-type-youtube" width="{{ embed_ratio[0] }}" height="{{ embed_ratio[1] }}" src="{{ src | replace: 'watch?v=', 'embed/' | append: '?controls=0&enablejsapi=1&modestbranding=1&rel=0&showinfo=0&color=white' | append: youtube_background }}" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+      {{ embed_video_image }}
+      {{ embed_video_controls }}
+    {%- else if src contains 'vimeo' -%}
+      <iframe class="embed-type-vimeo" width="{{ embed_ratio[0] }}" height="{{ embed_ratio[1] }}" src="{{ src | replace: 'vimeo.com', 'player.vimeo.com/video' | append: '?quality=720p&title=0&byline=0&portrait=0' | append: '&background=' | append: vimeo_background }}" frameborder="0"></iframe>
+      {{ embed_video_image }}
+      {{ embed_video_controls }}
+    {%- else if src contains 'twitter' -%}
+    {%- endif -%}
   </div>
 </div>

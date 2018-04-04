@@ -3,31 +3,77 @@ layout: default
 ---
 
 <article class="work">
-  <h1 class="post-title">{{ page.title }}</h1>
+  <div class="work-header">
+    <h1 class="work-title">{{ page.title }}</h1>
+    {%- if page.responsible_for -%}
+      <h3>{{ page.responsible_for | join: ', ' }}</h3>
+    {%- endif -%}
+    {%- if page.for -%}
+      {%- capture for_content -%}
+        {%- if page.for_url -%}
+          <a target="_blank" href="{{ page.for_url }}">{{ page.for }}</a>
+        {%- else -%}
+          {{ page.for }}
+        {%- endif -%}
+      {%- endcapture -%}
+      <p>All work completed at {{ for_content }}.</p>
+    {%- endif -%}
+    {%- if page.live -%}
+      <p><a target="_blank" href="{{ page.live }}">Live</a></p>
+    {%- endif -%}
+    {%- if page.archive -%}
+      <p><a target="_blank" href="{{ page.archive }}">Archive</a></p>
+    {%- endif -%}
+  </div>
   {%- for row in page.rows -%}
-    <div class="row-wrapper">
-      <div class="row-inner">
-        <div class="row">
-          {%- for column in row -%}
-            <div class="column
-              column-span-{{ column.span | default: 'default' | replace: '/', '-' }}
-              column-push-{{ column.push | default: '0' | replace: '/', '-' }}
-              column-pull-{{ column.pull | default: '0' | replace: '/', '-' }}
-              column-type-{{ column.type | default: 'default' }}"
-            >
-              {% case column.type %}
-                {% when 'image' %}
-                  {% include image.html src=column.content %}
-                {% when 'embed' %}
-                  {% include embed.html src=column.content %}
-                {% else %}
+    {%- if row.content -%}
+      {%- assign row_columns = row.content -%}
+    {%- else -%}
+      {%- assign row_columns = row -%}
+    {%- endif -%}
+    {%- capture row_content -%}
+      {%- for column in row_columns -%}
+        {%- capture column_content -%}
+          {%- case column.type -%}
+            {%- when 'image' -%}
+              {%- include image.html src=column.content span=column.span -%}
+            {%- when 'external-image' -%}
+              {%- include image.html src=column.content span=column.span external=true -%}
+            {%- when 'embed' -%}
+              {%- include embed.html src=column.content ratio=column.ratio image=column.image image_external=column.image_external background=column.background -%}
+            {%- when 'reference' -%}
+              <div class="reference-wrapper">
+                {%- if column.image -%}
+                  {%- capture reference_image -%}
+                    <div class="reference-image">
+                      {%- include image.html src=column.image -%}
+                    </div>
+                  {%- endcapture -%}
+                  {%- if column.url -%}
+                    <a class="reference-image-link" target="_blank" href="{{ column.url }}">{{ reference_image }}</a>
+                  {%- else -%}
+                    {{ reference_image }}
+                  {%- endif -%}
+                {%- endif -%}
+                <blockquote class="reference-quote">
                   {{ column.content | markdownify }}
-              {% endcase %}
-            </div>
-          {%- endfor -%}
-        </div>
-      </div>
-    </div>
+                </blockquote>
+                {%- if column.url -%}
+                  <p><a class="reference-link" target="_blank" href="{{ column.url }}">{{ column.url | replace: 'https://www.', '' | replace: 'http://www.', '' | replace: 'https://', '' | replace: 'http://', '' }}</a></p>
+                {%- endif -%}
+              </div>
+            {%- else -%}
+              {{ column.content | markdownify }}
+          {%- endcase -%}
+        {%- endcapture -%}
+        {%- include column.html config=column content=column_content -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- assign row_footer = false -%}
+    {%- if row.footer -%}
+      {%- assign row_footer = row.footer | markdownify -%}
+    {%- endif -%}
+    {%- include row.html config=row content=row_content footer=row_footer -%}
   {%- endfor -%}
-  {{ content }}
+  <!-- {{ content }} -->
 </article>

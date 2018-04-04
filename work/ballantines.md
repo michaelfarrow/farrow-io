@@ -1,27 +1,39 @@
 ---
 layout: work
 title: Ballantine's
+for: Aesop Agency
+for_url: http://aesopagency.com
+responsible_for:
+  - UX
+  - Application Development
+image: DSC3904.jpg
 rows:
   -
-    - type: image
-      content: DSC3904.jpg
-    - type: text
-      content: |
-        I was *responsible* for the following:
-        - Review of contracts
-        - Hiring
-        - Accounting
+    - content: |
+        Ballantine's is a blended whisky which is produced solely in Scotland. The brand needed a premium and unforgettable tasting programme that could travel the globe and share their story, particularly in its biggest market, Asia.
   -
-    - type: embed
-      push: 1/2
-      content: https://www.youtube.com/watch?v=s8QMUlL3Qf4
-    - type: text
-      pull: 1/2
+    - type: external-image
+      content: https://focuslabllc.com/assets/portfolio/katy-skelton/Katy-Skelton-brand-5@2x.jpg
+    - type: external-image
+      content: https://focuslabllc.com/assets/portfolio/katy-skelton/Katy-Skelton-brand-6@2x.jpg
+  -
+    content:
+      - type: external-image
+        content: https://focuslabllc.com/assets/portfolio/katy-skelton/_1600xAUTO_crop_center-center/Katy-Skelton-website@2x.jpg
+        span: double
+    footer: An image that shows some stuff
+  -
+    content:
+      - type: embed
+        content: https://vimeo.com/142379770
+    footer: A video that shows some stuff
+  -
+    - align: left
       content: |
-        This is a paragraph
+        > The result was a fully interactive and immersive experience.
 
-        This is a paragraph
+        Using a custom designed digital table and 360° projections, the Ballantine's brand ambassador guides the guests through history and across Scotland to learn more about the whisky and its creation.
   -
     - type: embed
-      content: https://vimeo.com/116947506
+      content: https://vimeo.com/143151802
 ---
