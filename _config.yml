@@ -47,3 +47,4 @@ kramdown:
 
 plugins:
   - jekyll-redirect-from
+  - jekyll-seo-tag
