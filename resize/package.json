@@ -1,0 +1,27 @@
+{
+  "name": "resize-images",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weyforth/farrow-io.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weyforth/farrow-io/issues"
+  },
+  "homepage": "https://github.com/weyforth/farrow-io#readme",
+  "dependencies": {
+    "fs-extra": "5.0.0",
+    "sharp": "0.20.1",
+    "klaw": "2.1.1",
+    "through2": "2.0.3",
+    "async": "2.6.0",
+    "change-case": "3.0.2"
+  }
+}

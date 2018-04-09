@@ -1,6 +1,0 @@
-{%- assign column_config = include.config | default {} -%}
-<div class="column column-span-{{ column_config.span | default: 'default' | replace: '/', '-' }} column-push-{{ column_config.push | default: '0' | replace: '/', '-' }} column-pull-{{ column_config.pull | default: '0' | replace: '/', '-' }} column-type-{{ column_config.type | default: 'default' }} column-align-{{ column_config.align | default: 'default' }} column-vertical-align-{{ column_config.vertical_align | default: 'default' }}" >
-  <div class="column-inner">
-    {{ include.content }}
-  </div>
-</div>

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+CMD="docker run -v `pwd`/images:/src -v `pwd`/docs/assets/img:/dest -v `pwd`/resize:/app -w /app node:8.11.1"
+
+$CMD npm install
+$CMD node .

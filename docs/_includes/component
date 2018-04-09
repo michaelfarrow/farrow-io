@@ -1,0 +1,14 @@
+{%- assign component_ignore_keys = 'type content' | split: ' ' -%}
+{%- assign component_attrs = '' -%}
+{%- for param in include -%}
+  {%- if component_ignore_keys contains param[0] -%}
+  {%- else -%}
+    {%- if param[1] != null -%}
+      {%- assign param_value = param[1] | jsonify | escape -%}
+      {%- assign component_attrs = component_attrs | append: ' data-' | append: param[0] | append: '="' | append: param_value | append: '"' -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+<div class="component component-type-{{ include.type | default: 'default' }}"{{ component_attrs }}>
+  {{ include.content }}
+</div>

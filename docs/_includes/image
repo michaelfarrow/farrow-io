@@ -1,0 +1,18 @@
+<span class="image image-span-{{ include.span | default: 'default' }} ">
+  {%- if include.page -%}
+    {%- assign image_page = include.page -%}
+  {%- else -%}
+    {%- assign image_page = page -%}
+  {%- endif -%}
+  {%- capture image_url -%}
+    {%- assign image_url_first_char = include.src | slice: 0 -%}
+    {%- if include.src contains 'https://' or include.src contains 'http://' -%}
+      {{ include.src }}
+    {%- elsif image_url_first_char == '/' -%}
+      {{ site.baseurl }}/assets/img{{ include.src }}
+    {%- else -%}
+      {{ site.baseurl }}/assets/img{{ image_page.url }}{{ include.src }}
+    {%- endif -%}
+  {%- endcapture -%}
+  <span class="image-img b-lazy" data-src="{{ image_url }}"></span>
+</span>
