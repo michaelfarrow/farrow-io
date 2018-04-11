@@ -38,12 +38,7 @@ layout: default
             {%- when 'image' -%}
               {%- include image src=column.content span=column.span -%}
             {%- when 'embed' -%}
-              {%- if column.image -%}
-                {%- assign embed_image = site.baseurl | append: '/assets/img' | append: page.url | append: column.image -%}
-              {%- else -%}
-                {%- assign embed_image = false -%}
-              {%- endif -%}
-              {%- include component type='embed-inline' src=column.content ratio=column.ratio image=embed_image background=column.background -%}
+              {%- include component type='embed-inline' data=column -%}
             {%- when 'reference' -%}
               <div class="reference-wrapper">
                 {%- if column.image -%}

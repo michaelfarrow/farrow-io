@@ -25,7 +25,8 @@ rows:
   -
     content:
       - type: embed
-        content: https://vimeo.com/142379770
+        provider: vimeo
+        id: 142379770
     footer: A video that shows some stuff
   -
     - align: left
@@ -35,12 +36,15 @@ rows:
         Using a custom designed digital table and 360° projections, the Ballantine's brand ambassador guides the guests through history and across Scotland to learn more about the whisky and its creation.
   -
     - type: embed
-      content: https://vimeo.com/143151802
+      provider: vimeo
+      id: 143151802
       image: DSC4746.jpg
   -
     - type: embed
-      content: https://www.youtube.com/watch?v=Bb7WKI4Ptpk
+      provider: youtube
+      id: Bb7WKI4Ptpk
   -
     - type: embed
-      content: https://www.youtube.com/watch?v=Bb7WKI4Ptpk
+      provider: youtube
+      id: Bb7WKI4Ptpk
 ---

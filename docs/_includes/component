@@ -1,6 +1,10 @@
 {%- assign component_ignore_keys = 'type content' | split: ' ' -%}
 {%- assign component_attrs = '' -%}
-{%- for param in include -%}
+{%- assign include_data = include -%}
+{%- if include.data -%}
+  {%- assign include_data = include.data -%}
+{%- endif -%}
+{%- for param in include_data -%}
   {%- if component_ignore_keys contains param[0] -%}
   {%- else -%}
     {%- if param[1] != null -%}

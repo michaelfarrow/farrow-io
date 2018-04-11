@@ -105,9 +105,5 @@ function initiateVueComponents (component, f) {
   }
 }
 
-// initiateVueComponents('gallery')
-// initiateVueComponents('embed-inline')
-
-new Vue({
-  el: '#app'
-})
+initiateVueComponents('gallery')
+initiateVueComponents('embed-inline')

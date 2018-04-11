@@ -6,6 +6,7 @@ responsible_for:
 rows:
   -
     - type: embed
-      content: https://vimeo.com/116947506
+      provider: vimeo
+      id: 116947506
       background: true
 ---

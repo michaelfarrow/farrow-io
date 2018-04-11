@@ -8,7 +8,8 @@ live: http://64bits.co.uk/
 rows:
   -
     - type: embed
-      content: https://www.youtube.com/watch?v=Bb7WKI4Ptpk
+      provider: youtube
+      id: Bb7WKI4Ptpk
       image: eboy.jpeg
   -
     - type: reference
