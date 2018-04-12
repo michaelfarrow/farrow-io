@@ -39,12 +39,4 @@ rows:
       provider: vimeo
       id: 143151802
       image: DSC4746.jpg
-  -
-    - type: embed
-      provider: youtube
-      id: Bb7WKI4Ptpk
-  -
-    - type: embed
-      provider: youtube
-      id: Bb7WKI4Ptpk
 ---

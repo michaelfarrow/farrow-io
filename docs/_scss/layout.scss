@@ -51,11 +51,12 @@ body {
 }
 
 .embed-wrapper {
+
   .embed-inner {
     position: relative;
     padding-top: 56.25%;
 
-    iframe {
+    div, iframe {
       position: absolute;
       display: block;
       top: 0;

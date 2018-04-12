@@ -7,6 +7,7 @@
 {% include_relative _vendor/blazy.1.8.2.js %}
 
 {% include_relative Component.js %}
+{% include_relative _components/Scroll.js %}
 {% include_relative _components/ImageInline.js %}
 {% include_relative _components/ImageBackground.js %}
 {% include_relative _components/Embed.js %}
@@ -16,8 +17,6 @@
 
 Vue.use(VueYouTubeEmbed.default)
 
-// var scrollController = new ScrollMagic.Controller({globalSceneOptions: { triggerHook: 'onEnter' }})
-//
 // $('.column').each(function () {
 //   var $el = $(this)
 //   new ScrollMagic.Scene({
