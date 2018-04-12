@@ -24,7 +24,7 @@
 
   <body>
     <div id="root-container">
-      <header class="masthead">
+      <!-- <header class="masthead">
         <div class="container">
           <a id="logo" href="{{ site.baseurl }}/" title="Home">
             {%- if page.url == '/' -%}
@@ -64,7 +64,7 @@
             </ul>
           </nav>
         </div>
-      </header>
+      </header> -->
 
       {{ content }}
 
@@ -72,6 +72,12 @@
           &copy; {{ site.time | date: '%Y' }}. All rights reserved.
       </footer> -->
     </div>
+
+    {%- if jekyll.environment == 'development' -%}
+      <script src="{{ site.baseurl }}/assets/javascript/vendor/vue.2.5.16.js"></script>
+    {%- else -%}
+      <script src="{{ site.baseurl }}/assets/javascript/vendor/vue.2.5.16.min.js"></script>
+    {%- endif -%}
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js"></script>
