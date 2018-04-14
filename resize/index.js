@@ -26,7 +26,8 @@ const CROP = {
 
 const SIZES = {
   default: [1000, 1000],
-  double: [2000, 1000],
+  // double: [2000, 1000],
+  double: [2000, 1125],
   thumb: [1000, 1000],
   embed: [2000, 1125],
   reference: [160, 160]

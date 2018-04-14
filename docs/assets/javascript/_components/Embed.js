@@ -87,11 +87,14 @@
       onReady: function (player) {
         this.player = player
       },
+      onTimeUpdate: function(e) {
+        if(e.seconds > 0) this.onPlay()
+      },
       pause: function () {
         this.$refs.player.pause()
       }
     },
-    template: `<vimeo-player ref="player" :video-id="id" :options="playerOptions" @play="onPlay" />`
+    template: `<vimeo-player ref="player" :video-id="id" :options="playerOptions" @timeupdate="onTimeUpdate" />`
   })
 
   ExtendComponent('scroll', 'embed-inline', {
@@ -116,7 +119,7 @@
       },
       background_colour: {
         type: String,
-        default: 'black'
+        default: 'transparent'
       }
     },
     data: function() {
@@ -152,10 +155,12 @@
           </div>
           <div v-if="image && !playing" class="embed-cover-image" @click="onImageClick" >
             <image-background :src="image" />
-            <div v-if="!load" class="embed-controls-play-pause">
-              <span>Play</span>
-              <i></i>
-            </div>
+            <span class="embed-controls-button">
+              <span class="embed-controls-control">
+                <span v-if="!load" class="embed-controls-play" />
+                <span v-else class="embed-controls-loading" />
+              </span>
+            </span>
           </div>
         </div>
       </div>

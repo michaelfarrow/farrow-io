@@ -11,6 +11,15 @@ body {
   // }
 }
 
+@keyframes rotating {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 #root-container {
   margin: 0 auto;
   overflow: hidden;
@@ -34,7 +43,7 @@ body {
   padding-top: 100%;
 
   &.image-span-double {
-    padding-top: 50%;
+    padding-top: 56.25%;
   }
 
   .image-img {
@@ -118,7 +127,7 @@ body {
   }
 }
 
-.embed-controls-play-pause {
+.embed-controls-button {
   cursor: pointer;
   position: absolute;
   top: 0;
@@ -127,10 +136,10 @@ body {
   height: 100%;
 
   span {
-    display: none;
+    display: block;
   }
 
-  i {
+  .embed-controls-control {
     display: block;
     width: 5em;
     height: 5em;
@@ -139,28 +148,46 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 1;
-    transition-property: opacity;
-    transition-duration: 0s;
-    transition-delay: 0s;
+  }
 
-    &:before {
+  .embed-controls-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    width: 0;
+    height: 0;
+    border-top: 1em solid transparent;
+    border-bottom: 1em solid transparent;
+    border-left: 1.5em solid white;
+  }
+
+  .embed-controls-loading {
+    position: absolute;
+    animation: rotating 2s linear infinite;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &::before {
       content: '';
       display: block;
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-40%, -50%);
-      width: 0;
-      height: 0;
-      border-top: 1em solid transparent;
-      border-bottom: 1em solid transparent;
-      border-left: 1.5em solid white;
+      width: 40%;
+      height: 40%;
+      transform: translate(-50%, -50%);
+      border-top: 0.2em solid white;
+      border-left: 0.2em solid white;
+      border-right: 0.2em solid white;
+      border-radius: 50%;
     }
   }
 
   &:hover {
-    i {
+    .embed-controls-control {
       background-color: $colour-primary;
     }
   }
@@ -323,7 +350,7 @@ body {
     @media(min-width: $bp-mobile) {
       width: 100%;
       a {
-        padding-top: 50%;
+        padding-top: 56.25%;
       }
     }
   }
@@ -420,7 +447,7 @@ article.work {
       }
 
       blockquote p {
-        max-width: 20em;
+        max-width: 22.5em;
       }
 
       @media(min-width: $bp-mobile) {
@@ -557,7 +584,7 @@ iframe.b-lazy {
 .gallery {
   overflow: hidden;
   position: relative;
-  padding-top: 50%;
+  padding-top: 56.25%;
 
   .progress-bar {
     position: absolute;

@@ -26,6 +26,7 @@ rows:
     content:
       - type: embed
         provider: vimeo
+        image: DSC3796.jpg
         id: 142379770
     footer: A video that shows some stuff
   -
