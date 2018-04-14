@@ -6,7 +6,7 @@ for_url: http://aesopagency.com
 responsible_for:
   - UX
   - Application Development
-image: DSC3904.jpg
+image: thumb.jpg
 rows:
   -
     - content: |

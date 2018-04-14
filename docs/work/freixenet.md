@@ -1,6 +1,8 @@
 ---
 layout: work
 title: Freixenet
+for: Aesop Agency
+for_url: http://aesopagency.com
 responsible_for:
   - Moving Image
 rows:
@@ -12,6 +14,7 @@ rows:
       provider: vimeo
       id: 173449847
       background: true
+      background-colour: '#EFEFEF'
   -
     - type: text
       align: left
@@ -25,4 +28,5 @@ rows:
         provider: vimeo
         id: 173450148
         background: true
+        background-colour: '#EFEFEF'
 ---

@@ -1,8 +1,11 @@
 ---
 ---
 
+{% include_relative _vendor/vue-router.3.0.1.js %}
+{% include_relative _vendor/vue-autosuggest.1.4.1.js %}
 {% include_relative _vendor/vue-vimeo-player.0.0.6.js %}
 {% include_relative _vendor/vue-youtube-embed.2.1.3.js %}
+
 {% include_relative _vendor/blazy.1.8.2.js %}
 {% include_relative _vendor/fuse.3.0.4.js %}
 
@@ -14,189 +17,11 @@
 {% include_relative _components/ProgressBar.js %}
 {% include_relative _components/Paginator.js %}
 {% include_relative _components/Gallery.js %}
+{% include_relative _components/Work.js %}
+{% include_relative _components/Search.js %}
 
 Vue.use(VueYouTubeEmbed.default)
-
-var list =   [
-     {
-        title: "Old Man's War",
-        author: {
-          firstName: "John",
-          lastName: "Scalzi"
-        }
-     },
-     {
-        title: "The Lock Artist",
-        author: {
-          firstName: "Steve",
-          lastName: "Hamilton"
-        }
-     },
-     {
-        title: "HTML5",
-        author: {
-          firstName: "Remy",
-          lastName: "Sharp"
-        }
-     },
-     {
-        title: "Right Ho Jeeves",
-        author: {
-          firstName: "P.D",
-          lastName: "Woodhouse"
-        }
-     },
-     {
-        title: "The Code of the Wooster",
-        author: {
-          firstName: "P.D",
-          lastName: "Woodhouse"
-        }
-     },
-     {
-        title: "Thank You Jeeves",
-        author: {
-          firstName: "P.D",
-          lastName: "Woodhouse"
-        }
-     },
-     {
-        title: "The DaVinci Code",
-        author: {
-          firstName: "Dan",
-          lastName: "Brown"
-        }
-     },
-     {
-        title: "Angels & Demons",
-        author: {
-          firstName: "Dan",
-          lastName: "Brown"
-        }
-     },
-     {
-        title: "The Silmarillion",
-        author: {
-          firstName: "J.R.R",
-          lastName: "Tolkien"
-        }
-     },
-     {
-        title: "Syrup",
-        author: {
-          firstName: "Max",
-          lastName: "Barry"
-        }
-     },
-     {
-        title: "The Lost Symbol",
-        author: {
-          firstName: "Dan",
-          lastName: "Brown"
-        }
-     },
-     {
-        title: "The Book of Lies",
-        author: {
-          firstName: "Brad",
-          lastName: "Meltzer"
-        }
-     },
-     {
-        title: "Lamb",
-        author: {
-          firstName: "Christopher",
-          lastName: "Moore"
-        }
-     },
-     {
-        title: "Fool",
-        author: {
-          firstName: "Christopher",
-          lastName: "Moore"
-        }
-     },
-     {
-        title: "Incompetence",
-        author: {
-          firstName: "Rob",
-          lastName: "Grant"
-        }
-     },
-     {
-        title: "Fat",
-        author: {
-          firstName: "Rob",
-          lastName: "Grant"
-        }
-     },
-     {
-        title: "Colony",
-        author: {
-          firstName: "Rob",
-          lastName: "Grant"
-        }
-     },
-     {
-        title: "Backwards, Red Dwarf",
-        author: {
-          firstName: "Rob",
-          lastName: "Grant"
-        }
-     },
-     {
-        title: "The Grand Design",
-        author: {
-          firstName: "Stephen",
-          lastName: "Hawking"
-        }
-     },
-     {
-        title: "The Book of Samson",
-        author: {
-          firstName: "David",
-          lastName: "Maine"
-        }
-     },
-     {
-        title: "The Preservationist",
-        author: {
-          firstName: "David",
-          lastName: "Maine"
-        }
-     },
-     {
-        title: "Fallen",
-        author: {
-          firstName: "David",
-          lastName: "Maine"
-        }
-     },
-     {
-        title: "Monster 1959",
-        author: {
-          firstName: "David",
-          lastName: "Maine"
-        }
-     }
-  ]
-
-
-var options = {
-  shouldSort: true,
-  threshold: 0.6,
-  location: 0,
-  distance: 100,
-  maxPatternLength: 32,
-  minMatchCharLength: 1,
-  keys: [
-    "title",
-    "author.firstName"
-]
-};
-var fuse = new Fuse(list, options); // "list" is the item array
-var result = fuse.search("david");
-console.log(result)
+Vue.use(VueAutosuggest)
 
 // $('.column').each(function () {
 //   var $el = $(this)
@@ -262,21 +87,26 @@ function loadImages(el) {
   bLazy.load(el.getElementsByClassName('image-img'))
 }
 
-function initiateVueComponents (component, f) {
+function getData (node, json) {
+  json = json === undefined ? false : json
+  // var data = node.attributes['data-data'] && JSON.parse(node.attributes['data-data'].value) || {}
+  var data = {}
+  var attrs = node.attributes
+  for(var j = 0; j < attrs.length; j++) {
+    var attr = attrs[j]
+    var match = attr.name.match(/^data\-(.*?)$/)
+    if(match) {
+      data[match[1].replace(/\-/g, '_')] = json ? JSON.parse(attr.value) : attr.value
+    }
+  }
+  return data
+}
+
+function initiateVueComponents (component) {
   var nodes = document.getElementsByClassName('component-type-' + component)
   for (var i = 0; i < nodes.length; i++) {
     var node = nodes[i]
-    var data = node.attributes['data-data'] && JSON.parse(node.attributes['data-data'].value) || {}
-    var attrs = node.attributes
-    for(var j = 0; j < attrs.length; j++) {
-      var attr = attrs[j]
-      if(attr.name !== 'data-data') {
-        var match = attr.name.match(/^data\-(.*?)$/)
-        if(match) {
-          data[match[1]] = JSON.parse(attr.value)
-        }
-      }
-    }
+    var data = getData(node, true)
     node.innerHTML = `<${component} v-bind="props"/>`
     new Vue({
       el: node,
@@ -285,5 +115,175 @@ function initiateVueComponents (component, f) {
   }
 }
 
+function initiateVueComponentsPE(parentId, children) {
+  // var parent = document.getElementById(parentId)
+  // if(!parent) return
+  // var rootComponent = document.createElement('div')
+  // var wrapper = document.createElement(parentId)
+  // for (var i = 0; i < children.length; i++) {
+  //   var child = children[i]
+  //   var nodes = parent.getElementsByClassName(child)
+  //   for (var j = 0; j < nodes.length; j++) {
+  //     var node = nodes[j]
+  //     var component = document.createElement(child)
+  //     var attr
+  //     var attributes = Array.prototype.slice.call(node.attributes)
+  //     while(attr = attributes.pop()) {
+  //       component.setAttribute(attr.nodeName, attr.nodeValue);
+  //     }
+  //     component.innerHTML = node.innerHTML
+  //     node.parentNode.replaceChild(component, node)
+  //   }
+  // }
+  // parent.parentNode.insertBefore(rootComponent, parent.nextSibling);
+  // wrapper.appendChild(parent)
+  // rootComponent.appendChild(wrapper)
+  // // parent.innerHTML = `<${parentId}><div>${parent.innerHTML}</div></${parentId}>`
+  // new Vue({
+  //   el: rootComponent
+  // })
+}
+
+function withElements (className, f) {
+  var nodes = document.getElementsByClassName(className)
+  for (var i = 0; i < nodes.length; i++) {
+    var node = nodes[i]
+    var data = getData(node)
+    f(node, data)
+  }
+}
+
 initiateVueComponents('gallery')
 initiateVueComponents('embed-inline')
+// initiateVueComponents('search')
+
+// initiateVueComponentsPE('work-items', ['work-item'])
+
+// var work = []
+// withElements('work-item', function(node, data) {
+//   work.push({
+//     node: node,
+//     data: data
+//   })
+// })
+// console.log(work)
+
+// var work = document.getElementById('work-items')
+// var workWrapper = document.createElement('div')
+//
+// work.parentNode.insertBefore(workWrapper, work.nextSibling)
+// workWrapper.appendChild(work)
+//
+// var workHtml = workWrapper.innerHTML
+// workWrapper.innerHTML = `
+//   <div>
+//     <div>
+//       <router-link to="/foo">Go to Foo</router-link>
+//       <router-link to="/bar">Go to Bar</router-link>
+//     </div>
+//     <div>
+//       <search v-model="search" :suggestions="suggestions" @input="onInput" />
+//     </div>
+//     <div> test [[ search ]]</div>
+//     <div>
+//       ${workHtml}
+//     </div>
+//   </div>
+// `
+
+// var routes = [
+//   { path: '/foo', component: Foo },
+//   { path: '/bar', component: Bar }
+// ]
+//
+// var router = new VueRouter({
+//   routes: routes
+// })
+//
+
+// new Vue({
+//   delimiters: ['[[', ']]'],
+//   // router: router,
+//   el: workWrapper,
+//   data: {
+//     search: '',
+//     work: [],
+//     suggestions: []
+//   },
+//   methods: {
+//     itemVisible: function(index) {
+//       var work = this.work[index]
+//       if(!work) return true
+//       return work.visible
+//     },
+//     onInput: function(search) {
+//       search = search.trim()
+//       if(search.length) {
+//         var result = this.fuse.search(search)
+//         var indexes = []
+//         for(var i = 0; i < result.length; i++) {
+//           indexes.push(result[i].index)
+//         }
+//         for(var i = 0; i < this.work.length; i++) {
+//           this.$set(this.work[i], 'visible', indexes.includes(this.work[i].index));
+//         }
+//       } else {
+//         for(var i = 0; i < this.work.length; i++) {
+//           this.$set(this.work[i], 'visible', true);
+//         }
+//       }
+//     }
+//   },
+//   mounted: function() {
+//     var work = []
+//     var dataTitles = []
+//     var dataFor = []
+//     var dataResponsibleFor = []
+//     var nodes = this.$el.getElementsByClassName('work-item')
+//     for (var i = 0; i < nodes.length; i++) {
+//       var node = nodes[i]
+//       var data = getData(node)
+//       if(!dataTitles.includes(data.title)) dataTitles.push(data.title)
+//       if(!dataFor.includes(data.for)) dataFor.push(data.for)
+//       var responsible_for = (data.responsible_for || '').split(/\s*,\s*/g)
+//       for(var j = 0; j < responsible_for.length; j++) {
+//         var rfi = responsible_for[j]
+//         if(!dataResponsibleFor.includes(rfi)) dataResponsibleFor.push(rfi)
+//       }
+//       work.push({
+//         index: i,
+//         data: data,
+//         visible: true
+//       })
+//     }
+//     this.work = work
+//     this.suggestions = {
+//       title: {
+//         label: 'Title',
+//         suggestions: dataTitles
+//       },
+//       for: {
+//         label: 'Agency',
+//         suggestions: dataFor
+//       },
+//       responsible_for: {
+//         label: 'Discipline',
+//         suggestions: dataResponsibleFor
+//       }
+//     }
+//     var options = {
+//       // shouldSort: true,
+//       // threshold: 0.6,
+//       // location: 0,
+//       // distance: 100,
+//       // maxPatternLength: 32,
+//       // minMatchCharLength: 1,
+//       keys: [
+//         "data.title",
+//         "data.for",
+//         "data.responsible_for"
+//       ]
+//     }
+//     this.fuse = new Fuse(work, options)
+//   }
+// })

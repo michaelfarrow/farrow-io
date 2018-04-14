@@ -1,3 +1,4 @@
+{%- assign component_filetypes = 'jpg, jpeg, gif, png, pdf' | split: ', ' -%}
 {%- assign component_ignore_keys = 'type content' | split: ' ' -%}
 {%- assign component_attrs = '' -%}
 {%- assign include_data = include -%}
@@ -8,8 +9,27 @@
   {%- if component_ignore_keys contains param[0] -%}
   {%- else -%}
     {%- if param[1] != null -%}
-      {%- assign param_value = param[1] | jsonify | escape -%}
-      {%- assign component_attrs = component_attrs | append: ' data-' | append: param[0] | append: '="' | append: param_value | append: '"' -%}
+      {%- assign param_value = param[1] -%}
+      {%- assign param_value_split = param_value | split: '' -%}
+      {%- assign component_filetypes_pass = false -%}
+      {%- for component_filetype in component_filetypes -%}
+        {%- assign component_filetype_pass = true -%}
+        {%- assign component_filetype_chars = component_filetype | prepend: '.' | split: '' | reverse -%}
+        {%- for component_filetype_char in component_filetype_chars -%}
+          {%- assign param_value_i = param_value | size | minus: 1 | minus: forloop.index0 -%}
+          {%- if component_filetype_char != param_value_split[param_value_i] -%}
+            {%- assign component_filetype_pass = false -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if component_filetype_pass -%}
+          {%- assign component_filetypes_pass = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if component_filetypes_pass -%}
+        {%- assign param_value = param_value | prepend: page.url | prepend: '/assets/img' | prepend: site.baseurl -%}
+      {%- endif -%}
+      {%- assign param_value_escaped = param_value | jsonify | escape -%}
+      {%- assign component_attrs = component_attrs | append: ' data-' | append: param[0] | append: '="' | append: param_value_escaped | append: '"' -%}
     {%- endif -%}
   {%- endif -%}
 {%- endfor -%}

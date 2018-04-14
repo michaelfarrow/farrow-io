@@ -9,6 +9,10 @@
       background: {
         type: Boolean,
         default: false
+      },
+      autoPlay: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
@@ -21,7 +25,8 @@
         if (!this.background) this.pause()
       },
       onPlay: function () {
-        EventBus.$emit('play', this)
+        if(!this.background) EventBus.$emit('play', this)
+        this.$emit('play')
       },
       onEventBusPlay: function (c) {
         if (!this.background && c !== this) this.pause()
@@ -49,7 +54,7 @@
           color: 'white',
           controls: 0,
           loop: bg,
-          autoplay: bg
+          autoplay: this.autoPlay ? 1 : 0
         }
       }
     },
@@ -67,14 +72,14 @@
   ExtendComponent('embed-base', 'embed-vimeo', {
     computed: {
       playerOptions: function () {
-        var bg = this.background ? 1 : 0
         return {
           quality: '720p',
           title: 0,
           byline: 0,
           portrait: 0,
-          background: bg,
-          transparent: 1
+          background: this.background ? 1 : 0,
+          transparent: 1,
+          autoplay: this.autoPlay ? 1 : 0
         }
       }
     },
@@ -106,9 +111,26 @@
         type: Boolean,
         default: false
       },
-      backgroundColour: {
+      image: {
+        type: String
+      },
+      background_colour: {
         type: String,
         default: 'black'
+      }
+    },
+    data: function() {
+      return {
+        playing: false,
+        load: false
+      }
+    },
+    methods: {
+      onPlay: function() {
+        this.playing = true
+      },
+      onImageClick: function() {
+        this.load = true
       }
     },
     computed: {
@@ -123,9 +145,18 @@
       }
     },
     template: `
-      <div class="embed-wrapper" :style="{backgroundColor: backgroundColour}">
+      <div class="embed-wrapper" :style="{backgroundColor: background_colour}">
         <div class="embed-inner" :style="{paddingTop: embedPadding}">
-          <component :is="providerComponentName" :id="id" :background="background" />
+          <div v-if="!image || load" :class="{ 'embed-component': true, 'embed-component-background': background, 'embed-component-playing': playing }">
+            <component :is="providerComponentName" :id="id" :background="background" :autoPlay="!!image || background" @play="onPlay" />
+          </div>
+          <div v-if="image && !playing" class="embed-cover-image" @click="onImageClick" >
+            <image-background :src="image" />
+            <div v-if="!load" class="embed-controls-play-pause">
+              <span>Play</span>
+              <i></i>
+            </div>
+          </div>
         </div>
       </div>
     `

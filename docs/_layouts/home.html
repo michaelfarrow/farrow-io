@@ -27,21 +27,32 @@ layout: default
     </ul>
   {%- endif -%} -->
 
-  <div class="work-items">
+  <section id="work-items">
     {%- for work_page_name in site.data.work -%}
       {%- assign work_page_path = work_page_name | prepend: 'work/' | append: '.md' -%}
       {%- assign work_page = site.pages | where: 'path', work_page_path | first -%}
+      {%- assign work_class = 'work-item' -%}
+      {%- if work_page.thumb_double -%}
+        {%- assign work_class = work_class | append: ' work-item-double' -%}
+      {%- endif -%}
       {%- if work_page -%}
-        <div class="work-item">
+        <div v-if="itemVisible({{ forloop.index0 }})" class="{{ work_class }}" data-title="{{ work_page.title | escape }}" data-for="{{ work_page.for }}" data-responsible-for="{{ work_page.responsible_for | default: '' | join: ', ' | escape }}">
           <a href="{{ site.baseurl }}{{ work_page.url }}">
             {%- if work_page.image -%}
               {%- include image page=work_page src=work_page.image span='double' -%}
             {%- endif -%}
-            {{ work_page.title }}
+            <span class="work-item-title-container">
+              <span class="work-item-title-inner">
+                <span class="work-item-title">{{ work_page.title }}</span>
+                {%- if work_page.responsible_for -%}
+                  <span class="work-item-responsible">{{ work_page.responsible_for | join: ', ' }}</span>
+                {%- endif -%}
+              </span>
+            </span>
           </a>
         </div>
       {%- endif -%}
     {%- endfor -%}
-  </div>
+  </section>
 
 </section>
