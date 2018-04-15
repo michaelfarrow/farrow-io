@@ -23,6 +23,18 @@
 Vue.use(VueYouTubeEmbed.default)
 Vue.use(VueAutosuggest)
 
+var anchorEls = document.querySelectorAll('a')
+var anchorElsLength = anchorEls.length
+
+for (var i = 0; i < anchorElsLength; i++) {
+  var anchorEl = anchorEls[i]
+  var href = anchorEl.getAttribute('href')
+
+  if (href[0] !== '/') {
+    anchorEl.setAttribute('target', '_blank');
+  }
+}
+
 // $('.column').each(function () {
 //   var $el = $(this)
 //   new ScrollMagic.Scene({

@@ -28,11 +28,11 @@
           return imageRoot + image
         })
       },
-      innerLeft: function () {
+      contentLeft: function () {
         var offset = this.canNavigate(this.peak) ? this.peak : 0
         return `translateX(${ offset * -5 }%)`
       },
-      contentLeft: function () {
+      innerLeft: function () {
         return `translateX(${ this.current * -100 }%)`
       }
     },
@@ -100,7 +100,7 @@
     // this.tickCurrent = 0
     },
     template: `
-      <div class="gallery">
+      <div class="gallery noselect">
         <div class="gallery-inner" :style="{ transform: innerLeft }">
           <ul class="gallery-content" :style="{ transform: contentLeft }">
             <li class="gallery-slide" v-for="(image, index) in imagePaths" :style="{ left: slideLeft(index) }">
@@ -111,8 +111,8 @@
           </ul>
         </div>
         <paginator :current="current + 1" :total="images.length" />
-        <div class="gallery-nav gallery-nav-prev" :class="{'gallery-nav-active': canNavigate(-1)}" @click="navigate(-1)" @mousemove="peakIn(-1)" @mouseleave="peakOut"></div>
-        <div class="gallery-nav gallery-nav-next" :class="{'gallery-nav-active': canNavigate(1)}" @click="navigate(1)" @mousemove="peakIn(1)" @mouseleave="peakOut"></div>
+        <div class="gallery-nav gallery-nav-prev" :class="{'gallery-nav-active': canNavigate(-1)}" @click="navigate(-1)" @mouseenter="peakIn(-1)" @mouseleave="peakOut"></div>
+        <div class="gallery-nav gallery-nav-next" :class="{'gallery-nav-active': canNavigate(1)}" @click="navigate(1)" @mouseenter="peakIn(1)" @mouseleave="peakOut"></div>
       </div>
     `
   })

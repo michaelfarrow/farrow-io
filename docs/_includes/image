@@ -1,4 +1,4 @@
-<span class="image image-span-{{ include.span | default: 'default' }} ">
+<span class="image image-span-{{ include.span | default: 'default' }} image-frame-{{ include.frame | default: 'default' }}">
   {%- if include.page -%}
     {%- assign image_page = include.page -%}
   {%- else -%}

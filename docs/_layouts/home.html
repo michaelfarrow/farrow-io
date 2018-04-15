@@ -35,6 +35,9 @@ layout: default
       {%- if work_page.thumb_double -%}
         {%- assign work_class = work_class | append: ' work-item-double' -%}
       {%- endif -%}
+      {%- if work_page.thumb_double_height -%}
+        {%- assign work_class = work_class | append: ' work-item-double-height' -%}
+      {%- endif -%}
       {%- if work_page -%}
         <div v-if="itemVisible({{ forloop.index0 }})" class="{{ work_class }}" data-title="{{ work_page.title | escape }}" data-for="{{ work_page.for }}" data-responsible-for="{{ work_page.responsible_for | default: '' | join: ', ' | escape }}">
           <a href="{{ site.baseurl }}{{ work_page.url }}">

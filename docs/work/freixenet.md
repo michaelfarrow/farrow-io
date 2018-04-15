@@ -8,7 +8,11 @@ responsible_for:
 rows:
   -
     - type: text
-      content: Pellentesque vulputate, mi quis euismod interdum, lectus justo ultricies nunc, at aliquam ante velit sit amet nulla. Morbi at felis in leo maximus dignissim. Nunc tincidunt elementum turpis et auctor. Quisque cursus urna a velit placerat, ac euismod est accumsan. Aenean ut sapien placerat felis efficitur vestibulum vel egestas lectus. Nulla euismod enim ante, quis hendrerit lectus auctor ut. Cras eget sem convallis, molestie orci id, venenatis augue. Cras eu nunc tincidunt, auctor sapien vitae, luctus augue. Aenean placerat varius eros eget placerat.
+      content: |
+        Reconstructing the physically created ad campaign imagery.
+
+        After Effects was used to combine and animate the various assets in 3d space, with dynamic lighting and shadows.
+
   -
     - type: embed
       provider: vimeo

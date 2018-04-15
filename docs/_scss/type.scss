@@ -6,8 +6,19 @@ html {
   font-weight: 300;
 
   @media(min-width: $bp-mobile) {
+    font-size: 16px;
+  }
+
+  @media(min-width: $bp-tablet) {
     font-size: 20px;
   }
+}
+
+::selection {
+  background: rgba($colour-primary, 0.2);
+}
+::-moz-selection {
+  background: rgba($colour-primary, 0.2);
 }
 
 h1 {

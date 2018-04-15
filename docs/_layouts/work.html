@@ -36,14 +36,14 @@ layout: default
         {%- capture column_content -%}
           {%- case column.type -%}
             {%- when 'image' -%}
-              {%- include image src=column.content span=column.span -%}
+              {%- include image src=column.content span=column.span frame=column.frame -%}
             {%- when 'embed' -%}
               {%- include component type='embed-inline' data=column -%}
             {%- when 'reference' -%}
               <div class="reference-wrapper">
                 {%- if column.image -%}
                   {%- capture reference_image -%}
-                    <div class="reference-image">
+                    <div class="reference-image reference-image-size-{{ column.image_size | default: 'default' }}">
                       {%- include image src=column.image -%}
                     </div>
                   {%- endcapture -%}

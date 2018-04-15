@@ -6,7 +6,7 @@ const sharp = require('sharp')
 const async = require('async')
 const changeCase = require('change-case')
 
-const SIZE_REGEX = /\-([a-zA-Z\-]+)$/
+const SIZE_REGEX = /\-([a-zA-Z_\-]+)$/
 
 const ALLOWED_EXTS = [
   'gif',
@@ -30,21 +30,34 @@ const SIZES = {
   double: [2000, 1125],
   thumb: [1000, 1000],
   embed: [2000, 1125],
-  reference: [160, 160]
+  reference: [160, 160],
+  reference_double: [320, 160],
+  reference_triple: [480, 160]
 }
 
-const METHODS = {}
+const methodMax = image => {
+  return image.max()
+}
+
+const METHODS = {
+  reference: methodMax,
+  referenceDouble: methodMax,
+  referenceTriple: methodMax
+}
 
 for (let size in SIZES) {
   const resize = SIZES[size]
   for (let crop in CROP) {
     const strategy = CROP[crop]
-    const methodName = []
+    let methodName = []
     if (size !== 'default' || (size === 'default' && crop === 'auto')) methodName.push(size)
     if (crop !== 'auto') methodName.push(crop)
-    METHODS[changeCase.camelCase(methodName.join('-'))] = image => {
+    methodName = changeCase.camelCase(methodName.join('-'))
+    const existingMethod = METHODS[methodName]
+    METHODS[methodName] = image => {
       image = image.resize.apply(image, resize)
       image = image.crop.call(image, strategy)
+      if(existingMethod) image = existingMethod(image)
       return image
     }
   }
