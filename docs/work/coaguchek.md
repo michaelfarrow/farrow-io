@@ -9,5 +9,13 @@ responsible_for:
 live: https://shop.coaguchek.com/
 rows:
   -
-    - content:
+    - type: text
+      content: |
+        UX and Redevelopment of the UK e-commerce site.
+
+        Wordpress site with WooCommerce and SagePay payment gateway integration. Also interfaces with CoaguChek’s order processing system.
+  -
+    - type: image
+      span: double
+      content: wireframes.jpg
 ---

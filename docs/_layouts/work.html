@@ -63,8 +63,10 @@ layout: default
                 {%- endif -%}
               </div>
             {%- when 'gallery' -%}
-              {%- assign gallery_image_root = site.baseurl | append: '/assets/img' | append: page.url -%}
-              {%- include component type='gallery' root=gallery_image_root images=column.content -%}
+              <div class="gallery-wrapper gallery-wrapper-span-{{ column.span | default: 'default' }}">
+                {%- assign gallery_image_root = site.baseurl | append: '/assets/img' | append: page.url -%}
+                {%- include component type='gallery' root=gallery_image_root images=column.content -%}
+              </div>
             {%- else -%}
               {{ column.content | markdownify }}
           {%- endcase -%}

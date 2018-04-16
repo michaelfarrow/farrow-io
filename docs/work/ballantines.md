@@ -11,6 +11,11 @@ rows:
   -
     - content: |
         Ballantine's is a blended whisky which is produced solely in Scotland. The brand needed a premium and unforgettable tasting programme that could travel the globe and share their story, particularly in its biggest market, Asia.
+    - type: gallery
+      content:
+        - DSC3681_half.jpg
+        - DSC3758_half.jpg
+        - DSC3788_half.jpg
   -
     - type: image
       content: DSC4827.jpg
@@ -18,6 +23,7 @@ rows:
       content: DSC4757.jpg
   -
     - type: gallery
+      span: double
       content:
         - DSC3681.jpg
         - DSC3758.jpg

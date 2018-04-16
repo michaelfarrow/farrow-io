@@ -683,10 +683,24 @@ iframe.b-lazy {
   transition-timing-function: linear;
 }
 
+.gallery-wrapper {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  padding-top: 100%;
+
+  &.gallery-wrapper-span-double {
+    padding-top: 56.25%;
+  }
+}
+
 .gallery {
   overflow: hidden;
-  position: relative;
-  padding-top: 56.25%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
   .progress-bar {
     position: absolute;
@@ -732,13 +746,19 @@ iframe.b-lazy {
   position: absolute;
   top: 0;
   width: 100%;
+  height: 100%;
 }
 
 .gallery-slide-inner {
-  display: block;
-  // position: relative;
-  // width: 110%;
-  // left: -5%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  .image {
+    padding-top: 0;
+    height: 100%;
+  }
 }
 
 .gallery-nav {

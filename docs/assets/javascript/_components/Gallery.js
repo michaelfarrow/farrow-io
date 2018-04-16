@@ -30,7 +30,7 @@
       },
       contentLeft: function () {
         var offset = this.canNavigate(this.peak) ? this.peak : 0
-        return `translateX(${ offset * -5 }%)`
+        return `translateX(${ offset * -2.5 }em)`
       },
       innerLeft: function () {
         return `translateX(${ this.current * -100 }%)`
@@ -105,7 +105,7 @@
           <ul class="gallery-content" :style="{ transform: contentLeft }">
             <li class="gallery-slide" v-for="(image, index) in imagePaths" :style="{ left: slideLeft(index) }">
               <span class="gallery-slide-inner">
-                <image-background :src="image" span="double" />
+                <image-background :src="image" />
               </span>
             </li>
           </ul>
